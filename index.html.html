@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUFFY STUDIO — Luxury Thrift Collection</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Tajawal & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FAF4D0',
+                            200: '#F5E69F',
+                            300: '#E2C262',
+                            400: '#D4AF37',
+                            500: '#B8860B',
+                            600: '#8B6508'
+                        },
+                        dark: {
+                            950: '#030303',
+                            900: '#09090b',
+                            850: '#111115',
+                            800: '#18181b',
+                            700: '#27272a'
+                        }
+                    },
+                    fontFamily: {
+                        tajawal: ['Tajawal', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'Tajawal', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 15px rgba(212, 175, 55, 0.15)' },
+                            '100%': { boxShadow: '0 0 35px rgba(212, 175, 55, 0.45)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif;
+            background-color: #030303;
+            color: #f4f4f5;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass-card {
+            background: rgba(18, 18, 22, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.2);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF6D2 0%, #D4AF37 50%, #997400 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #E2C262 0%, #D4AF37 50%, #B8860B 100%);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030303;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold-400 selection:text-black">
+
+    <!-- Ambient Glow Background Blobs -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-gold-400/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-1/3 right-10 w-80 h-80 bg-gold-500/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-gold-400/20 shadow-2xl transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between">
+            
+            <!-- Left Actions: Cart & Instagram -->
+            <div class="flex items-center space-x-3 sm:space-x-4 space-x-reverse">
+                <button onclick="toggleCart(true)" class="relative p-2.5 sm:p-3 rounded-2xl glass-card text-gold-400 hover:bg-gold-400 hover:text-black transition-all group" title="سلة التسوق">
+                    <i class="fa-solid fa-bag-shopping text-lg sm:text-xl transition-transform group-hover:scale-110"></i>
+                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-gold-400 text-black font-extrabold text-[11px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-black shadow-lg">0</span>
+                </button>
+
+                <!-- Instagram Button -->
+                <a href="https://instagram.com/luffystudio23" target="_blank" rel="noopener noreferrer" class="p-2.5 sm:p-3 rounded-2xl glass-card text-gold-400 hover:bg-gold-400 hover:text-black transition-all group" title="انستغرام @luffystudio23">
+                    <i class="fa-brands fa-instagram text-lg sm:text-xl transition-transform group-hover:scale-110"></i>
+                </a>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <nav class="hidden md:flex items-center space-x-8 space-x-reverse font-medium text-sm text-gray-300">
+                <a href="#home" class="hover:text-gold-400 transition-colors py-1">الرئيسية</a>
+                <a href="#products" class="hover:text-gold-400 transition-colors py-1">التشكيلة الحصرية</a>
+                <a href="#about" class="hover:text-gold-400 transition-colors py-1">عن المتجر</a>
+                <a href="#contact" class="hover:text-gold-400 transition-colors py-1">تواصل معنا</a>
+            </nav>
+
+            <!-- Right: Vector Brand Logo (10 Clicks Hidden Admin Trigger) -->
+            <div id="mainLogo" onclick="handleLogoClick()" class="flex items-center cursor-pointer select-none group">
+                <div class="text-right ml-3 hidden sm:block">
+                    <span class="block text-xl font-black tracking-wider text-white group-hover:text-gold-400 transition-colors">LUFFY STUDIO</span>
+                    <span class="block text-[8px] tracking-[0.25em] text-gold-400 font-bold uppercase">LUXURY THRIFT STORE</span>
+                </div>
+                
+                <!-- Custom Matching Vector Logo Box -->
+                <div class="p-2 sm:p-2.5 rounded-2xl glass-card border-gold-400/40 bg-black/90 flex items-center justify-center transition-transform group-hover:scale-105 group-hover:border-gold-400 shadow-lg">
+                    <div class="relative flex items-center justify-start font-sans select-none pr-1 pl-0.5">
+                        <!-- Big Bold L -->
+                        <span class="text-4xl sm:text-5xl font-black gold-gradient-text leading-none tracking-tighter">L</span>
+                        
+                        <!-- Studio & UFFY Right-Aligned Text Stack -->
+                        <div class="flex flex-col justify-center -mr-1.5 pt-0.5">
+                            <span class="text-[11px] sm:text-[13px] font-normal text-gray-200 tracking-normal leading-tight font-sans">studio</span>
+                            <span class="text-[12px] sm:text-[14px] font-black text-white tracking-widest leading-none uppercase -mt-0.5">UFFY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT BODY -->
+    <main class="flex-grow z-10 relative">
+        
+        <!-- HERO SECTION -->
+        <section id="home" class="relative py-16 sm:py-24 border-b border-gold-400/10 overflow-hidden">
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-gold-400/30 mb-6 animate-pulse-glow">
+                    <span class="w-2 h-2 rounded-full bg-gold-400 animate-ping"></span>
+                    <span class="text-gold-300 font-semibold text-xs sm:text-sm tracking-widest uppercase">High-End Thrift & Streetwear Collections</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-6xl lg:text-7xl font-black text-white leading-tight mb-6">
+                    فخامة التميز مع <br>
+                    <span class="gold-gradient-text">LUFFY STUDIO</span>
+                </h1>
+
+                <p class="text-gray-400 text-sm sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-normal">
+                    البوتيك المفضل لعشاق الموضة الرفيعة والقطع النادرة <b>(1-of-1)</b>. نختار لكم أجود وأرقى ماركات الفريب العالمية لتضمنوا إطلالة فريدة لا تكرر.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#products" class="px-8 py-4 gold-gradient-bg text-black font-extrabold rounded-2xl shadow-xl hover:shadow-gold-400/20 hover:scale-105 transition-all flex items-center gap-2">
+                        <span>تصفح المنتجات</span>
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                    <a href="https://instagram.com/luffystudio23" target="_blank" class="px-8 py-4 glass-card text-white font-bold rounded-2xl hover:border-gold-400 hover:text-gold-400 transition-all flex items-center gap-2">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                        <span>تابعنا على انستغرام</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTS SECTION -->
+        <section id="products" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12 border-r-4 border-gold-400 pr-4">
+                <div>
+                    <h2 class="text-2xl sm:text-4xl font-black text-white">التشكيلة المتاحة حالياً</h2>
+                    <p class="text-gray-400 text-xs sm:text-sm mt-1">قطع أصلية مائة بالمائة جاهزة للتسليم الفوري</p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-auto">
+                    <span id="productCounterBadge" class="glass-card px-4 py-2 rounded-xl text-gold-400 font-bold text-xs sm:text-sm border-gold-400/30">
+                        10 قطع حصرية
+                    </span>
+                </div>
+            </div>
+
+            <!-- Dynamic Product Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will load items here -->
+            </div>
+        </section>
+
+        <!-- ABOUT / FEATURES SECTION -->
+        <section id="about" class="py-16 bg-dark-900/60 border-t border-b border-gold-400/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 rounded-3xl text-center">
+                        <div class="w-16 h-16 rounded-2xl gold-gradient-bg text-black flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">قطع فريدة (1-of-1)</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">كل قطعة متوفرة في المتجر هي قطعة واحدة فقط لا غير، لتمنحك تميزاً استثنائياً.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl text-center">
+                        <div class="w-16 h-16 rounded-2xl gold-gradient-bg text-black flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">توصيل سريع لكل التونسيين</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">نوصل الطلبيات مباشرة إلى باب بيتك في جميع ولايات الجمهورية التونسية.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl text-center">
+                        <div class="w-16 h-16 rounded-2xl gold-gradient-bg text-black flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">جودة مفحوصة بدقة</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">يتم غسل، فحص، ومعاينة كل الملابس لضمان أعلى درجات الفخامة والراحة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-black border-t border-gold-400/20 py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-right">
+                <span class="text-xl font-black gold-gradient-text block">LUFFY STUDIO</span>
+                <p class="text-gray-500 text-xs mt-1">جميع الحقوق محفوظة &copy; 2026 - الموضة والأناقة بين يديك</p>
+            </div>
+
+            <div class="flex items-center space-x-6 space-x-reverse text-gray-400 text-sm">
+                <a href="https://instagram.com/luffystudio23" target="_blank" class="hover:text-gold-400 transition-colors flex items-center gap-2">
+                    <i class="fa-brands fa-instagram text-lg"></i>
+                    <span>@luffystudio23</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity" onclick="toggleCart(false)"></div>
+        <div class="fixed inset-y-0 left-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-dark-900 border-r border-gold-400/30 text-white p-6 flex flex-col justify-between shadow-2xl">
+                <div>
+                    <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-6">
+                        <h2 class="text-xl font-black text-gold-400 flex items-center gap-2">
+                            <i class="fa-solid fa-bag-shopping"></i> سلة التسوق
+                        </h2>
+                        <button onclick="toggleCart(false)" class="p-2 text-gray-400 hover:text-white rounded-lg">
+                            <i class="fa-solid fa-xmark text-2xl"></i>
+                        </button>
+                    </div>
+                    <div id="cartItemsContainer" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1"></div>
+                </div>
+
+                <div class="pt-6 border-t border-gray-800">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-gray-400">المجموع الكلي:</span>
+                        <span id="cartTotal" class="text-2xl font-black text-gold-400">0 TND</span>
+                    </div>
+                    <button id="checkoutBtn" onclick="openCheckoutModal()" disabled class="w-full py-4 gold-gradient-bg text-black font-extrabold rounded-2xl shadow-xl disabled:opacity-40 disabled:cursor-not-allowed hover:scale-[1.02] transition-transform">
+                        تأكيد الطلب الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
+        <div class="bg-dark-900 border border-gold-400/40 w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeCheckoutModal()" class="absolute top-5 left-5 text-gray-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+
+            <h3 class="text-2xl font-black gold-gradient-text mb-2 text-center">إتمام الشراء والتوصيل</h3>
+            <p class="text-gray-400 text-xs text-center mb-6">الرجاء إدخال معطياتك بدقة ليصلك الطلب في أسرع وقت</p>
+
+            <form id="checkoutForm" onsubmit="submitOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">الاسم واللقب الكامل *</label>
+                    <input type="text" id="custName" required placeholder="مثال: محمد صالح" class="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-gold-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">رقم الهاتف *</label>
+                    <input type="tel" id="custPhone" required placeholder="مثال: 55123456" class="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-gold-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">العنوان ورقم الدار والولاية *</label>
+                    <textarea id="custAddress" required rows="3" placeholder="مثال: تونس، أريانة النصر 2..." class="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-gold-400 focus:outline-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 gold-gradient-bg text-black font-extrabold rounded-xl shadow-lg mt-4 hover:scale-[1.02] transition-transform">
+                    إرسال الطلب عبر النظام
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SECRET ADMIN DASHBOARD MODAL -->
+    <div id="adminModal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-xl hidden">
+        <div class="bg-dark-900 border border-gold-400/50 w-full max-w-5xl h-[90vh] rounded-3xl flex flex-col overflow-hidden shadow-2xl">
+            <!-- Admin Topbar -->
+            <div class="bg-black px-6 py-4 border-b border-gold-400/30 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+                    <h2 class="text-lg sm:text-xl font-extrabold text-gold-400">لوحة التحكم السرية — LUFFY STUDIO Admin</h2>
+                </div>
+                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-800 bg-black/50 px-6">
+                <button id="tabBtnProducts" onclick="switchAdminTab('products')" class="py-3.5 px-6 text-sm font-bold border-b-2 border-gold-400 text-gold-400">إدارة الملابس</button>
+                <button id="tabBtnOrders" onclick="switchAdminTab('orders')" class="py-3.5 px-6 text-sm font-bold border-b-2 border-transparent text-gray-400">الطلبات المباشرة</button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+                <!-- Products Tab -->
+                <div id="tabProductsContent" class="space-y-6">
+                    <form id="productForm" onsubmit="saveProduct(event)" class="bg-black/80 p-5 rounded-2xl border border-gray-800 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="hidden" id="prodId">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">عنوان/اسم القطعة *</label>
+                            <input type="text" id="prodTitle" required placeholder="مثال: Vintage Nike Hoodie" class="w-full bg-dark-800 border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-gold-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">السعر (TND) *</label>
+                            <input type="number" id="prodPrice" required placeholder="45" class="w-full bg-dark-800 border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-gold-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">الكمية المتوفرة *</label>
+                            <input type="number" id="prodStock" min="0" value="1" required class="w-full bg-dark-800 border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-gold-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">الصورة (رابط URL أو تحميل مباشر من التليفون/الكمبيوتر)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="prodImageUrl" placeholder="https://..." class="flex-1 bg-dark-800 border border-gray-700 rounded-xl p-3 text-white text-xs focus:border-gold-400 focus:outline-none">
+                                <label class="cursor-pointer bg-dark-700 hover:bg-gold-400 hover:text-black border border-gray-600 rounded-xl px-3 py-2 flex items-center justify-center text-xs text-gray-200 font-bold transition-all">
+                                    <i class="fa-solid fa-upload ml-1"></i> رفع
+                                    <input type="file" id="prodFileInput" accept="image/*" onchange="handleDirectFileUpload(event)" class="hidden">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <button type="submit" class="px-8 py-3 gold-gradient-bg text-black font-extrabold rounded-xl text-sm shadow-lg hover:scale-[1.01] transition-transform">
+                                حفظ وإضافة إلى المتجر
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="overflow-x-auto rounded-2xl border border-gray-800">
+                        <table class="w-full text-right text-sm bg-black min-w-[500px]">
+                            <thead class="bg-dark-800 text-gray-400 text-xs border-b border-gray-800">
+                                <tr>
+                                    <th class="p-4">الصورة</th>
+                                    <th class="p-4">اسم القطعة</th>
+                                    <th class="p-4">السعر</th>
+                                    <th class="p-4">المخزون</th>
+                                    <th class="p-4 text-center">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsTable" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="tabOrdersContent" class="hidden">
+                    <div class="overflow-x-auto rounded-2xl border border-gray-800">
+                        <table class="w-full text-right text-sm bg-black min-w-[650px]">
+                            <thead class="bg-dark-800 text-gray-400 text-xs border-b border-gray-800">
+                                <tr>
+                                    <th class="p-4">رقم الطلب</th>
+                                    <th class="p-4">العميل</th>
+                                    <th class="p-4">الهاتف والعنوان</th>
+                                    <th class="p-4">المنتجات المطلوبة</th>
+                                    <th class="p-4">المجموع الكلي</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTable" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECRET CLICK COUNTER OVERLAY -->
+    <div id="clickCounterOverlay" class="fixed top-28 left-1/2 -translate-x-1/2 z-50 gold-gradient-bg text-black font-black px-6 py-2 rounded-full shadow-2xl opacity-0 pointer-events-none transition-all text-xs sm:text-sm">
+        <span id="counterText">0/10</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Default 10 High-End Luxury Thrift Products
+        const initialProducts = [
+            { id: 'p1', title: 'Jacket Vintage Originale', price: 45, stock: 1, image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&q=80' },
+            { id: 'p2', title: 'T-shirt Oversized Vintage', price: 25, stock: 2, image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&q=80' },
+            { id: 'p3', title: 'Sweatshirt Hoodie Luxury', price: 35, stock: 1, image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&q=80' },
+            { id: 'p4', title: 'Cargo Pants Streetwear', price: 40, stock: 1, image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80' },
+            { id: 'p5', title: 'Denim Vintage Jacket', price: 50, stock: 1, image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&q=80' },
+            { id: 'p6', title: 'Knitwear Sweater Vintage', price: 30, stock: 2, image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&q=80' },
+            { id: 'p7', title: 'Puffer Jacket Winter', price: 65, stock: 1, image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=600&q=80' },
+            { id: 'p8', title: 'Graphic Oversized Tee', price: 22, stock: 3, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&q=80' },
+            { id: 'p9', title: 'Track Jacket Retro', price: 38, stock: 1, image: 'https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?w=600&q=80' },
+            { id: 'p10', title: 'Leather Vintage Jacket', price: 85, stock: 1, image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&q=80' }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('luffy_products'));
+        if (!products || products.length === 0) {
+            products = initialProducts;
+            localStorage.setItem('luffy_products', JSON.stringify(products));
+        }
+
+        let orders = JSON.parse(localStorage.getItem('luffy_orders')) || [];
+        let cart = JSON.parse(localStorage.getItem('luffy_cart')) || [];
+        let uploadedBase64Image = '';
+        let logoClickCount = 0;
+        let logoClickTimer = null;
+
+        window.onload = function() {
+            renderProducts();
+            updateCartUI();
+        };
+
+        // Render storefront items
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const badge = document.getElementById('productCounterBadge');
+            if (badge) badge.innerText = `${products.length} قطعة حصرية`;
+            grid.innerHTML = '';
+
+            products.forEach(p => {
+                const isOutOfStock = p.stock <= 0;
+                const card = document.createElement('div');
+                card.className = "glass-card glass-card-hover rounded-3xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="h-64 sm:h-72 overflow-hidden rounded-2xl mb-4 bg-dark-800 relative">
+                            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            ${isOutOfStock 
+                                ? '<span class="absolute top-3 right-3 bg-red-600/90 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-black shadow-lg">غير متوفر (Rupture)</span>' 
+                                : '<span class="absolute top-3 right-3 bg-gold-400/90 text-black backdrop-blur-md text-xs px-3 py-1 rounded-full font-black shadow-lg">متوفر (Disponible)</span>'}
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-1 group-hover:text-gold-400 transition-colors">${p.title}</h3>
+                        <div class="text-gold-400 font-black text-xl mb-4">${p.price} TND</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="addToCart('${p.id}')" ${isOutOfStock ? 'disabled' : ''} class="py-3 border border-gold-400/60 text-gold-400 font-bold rounded-xl text-xs sm:text-sm hover:bg-gold-400 hover:text-black transition-all flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed">
+                            <span>السلة</span>
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                        <button onclick="quickOrder('${p.id}')" ${isOutOfStock ? 'disabled' : ''} class="py-3 gold-gradient-bg text-black font-extrabold rounded-xl text-xs sm:text-sm shadow-lg hover:scale-105 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                            شراء الآن
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Direct File Upload (Base64)
+        function handleDirectFileUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    uploadedBase64Image = evt.target.result;
+                    document.getElementById('prodImageUrl').value = "صورة محلية تم رفعها بنجاح ✓";
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function toggleCart(show) {
+            document.getElementById('cartDrawer').classList.toggle('hidden', !show);
+        }
+
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod || prod.stock <= 0) return;
+
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                if (item.qty < prod.stock) item.qty++;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
+
+            localStorage.setItem('luffy_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const cartBadge = document.getElementById('cartBadge');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            cartBadge.innerText = cart.reduce((sum, i) => sum + i.qty, 0);
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-12 text-sm"><i class="fa-solid fa-basket-shopping text-3xl mb-2 block"></i>السلة فارغة حالياً</div>';
+                cartTotal.innerText = '0 TND';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            let total = 0;
+            container.innerHTML = '';
+
+            cart.forEach(item => {
+                total += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center p-3 bg-black/60 border border-gray-800 rounded-xl";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg">
+                        <div>
+                            <h4 class="text-xs font-bold text-white">${item.title}</h4>
+                            <span class="text-gold-400 text-xs font-bold">${item.price} TND</span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-black text-gray-300">الكمية: ${item.qty}</span>
+                `;
+                container.appendChild(div);
+            });
+
+            cartTotal.innerText = `${total} TND`;
+        }
+
+        function quickOrder(id) {
+            addToCart(id);
+            toggleCart(false);
+            openCheckoutModal();
+        }
+
+        function openCheckoutModal() {
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            cart.forEach(ci => {
+                const p = products.find(p => p.id === ci.id);
+                if (p) p.stock = Math.max(0, p.stock - ci.qty);
+            });
+
+            orders.unshift({
+                id: 'ORD-' + Date.now().toString().slice(-5),
+                customer: { name, phone, address },
+                items: [...cart],
+                total: cart.reduce((sum, i) => sum + i.price * i.qty, 0)
+            });
+
+            localStorage.setItem('luffy_products', JSON.stringify(products));
+            localStorage.setItem('luffy_orders', JSON.stringify(orders));
+
+            cart = [];
+            localStorage.setItem('luffy_cart', JSON.stringify(cart));
+            updateCartUI();
+            closeCheckoutModal();
+            renderProducts();
+
+            alert('تم تسجيل طلبك بنجاح! سنتصل بك قريباً للتأكيد والتوصيل.');
+        }
+
+        // Secret Admin Unlock via 10 Logo Clicks
+        function handleLogoClick() {
+            logoClickCount++;
+            const overlay = document.getElementById('clickCounterOverlay');
+            document.getElementById('counterText').innerText = `${logoClickCount}/10`;
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+
+            clearTimeout(logoClickTimer);
+            if (logoClickCount >= 10) {
+                logoClickCount = 0;
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                promptAdminPassword();
+            } else {
+                logoClickTimer = setTimeout(() => {
+                    logoClickCount = 0;
+                    overlay.classList.add('opacity-0', 'pointer-events-none');
+                }, 3000);
+            }
+        }
+
+        function promptAdminPassword() {
+            const pwd = prompt("أدخل كلمة السر الخاصة بـ LUFFY STUDIO Admin:");
+            if (pwd === "i wanna be your slave") {
+                openAdminModal();
+            } else if (pwd !== null) {
+                alert("كلمة السر غير صحيحة!");
+            }
+        }
+
+        function openAdminModal() {
+            renderAdminProducts();
+            renderAdminOrders();
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function switchAdminTab(tab) {
+            document.getElementById('tabProductsContent').classList.toggle('hidden', tab !== 'products');
+            document.getElementById('tabOrdersContent').classList.toggle('hidden', tab !== 'orders');
+
+            const btnProducts = document.getElementById('tabBtnProducts');
+            const btnOrders = document.getElementById('tabBtnOrders');
+
+            if (tab === 'products') {
+                btnProducts.className = "py-3.5 px-6 text-sm font-bold border-b-2 border-gold-400 text-gold-400";
+                btnOrders.className = "py-3.5 px-6 text-sm font-bold border-b-2 border-transparent text-gray-400";
+            } else {
+                btnOrders.className = "py-3.5 px-6 text-sm font-bold border-b-2 border-gold-400 text-gold-400";
+                btnProducts.className = "py-3.5 px-6 text-sm font-bold border-b-2 border-transparent text-gray-400";
+            }
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('adminProductsTable');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4"><img src="${p.image}" class="w-12 h-12 object-cover rounded-xl"></td>
+                    <td class="p-4 font-bold text-white">${p.title}</td>
+                    <td class="p-4 text-gold-400 font-bold">${p.price} TND</td>
+                    <td class="p-4">${p.stock}</td>
+                    <td class="p-4 text-center">
+                        <button onclick="deleteProduct('${p.id}')" class="text-red-500 hover:text-red-400 p-2"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const title = document.getElementById('prodTitle').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const stock = parseInt(document.getElementById('prodStock').value);
+            const urlInput = document.getElementById('prodImageUrl').value.trim();
+            
+            const image = uploadedBase64Image || (urlInput && !urlInput.includes("تم رفعها") ? urlInput : 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&q=80');
+
+            products.unshift({ id: 'p-' + Date.now(), title, price, stock, image });
+            localStorage.setItem('luffy_products', JSON.stringify(products));
+            renderProducts();
+            renderAdminProducts();
+            document.getElementById('productForm').reset();
+            uploadedBase64Image = '';
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('luffy_products', JSON.stringify(products));
+            renderProducts();
+            renderAdminProducts();
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersTable');
+            tbody.innerHTML = '';
+            orders.forEach(o => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-mono text-gold-400 font-bold">${o.id}</td>
+                    <td class="p-4 font-bold text-white">${o.customer.name}</td>
+                    <td class="p-4 text-xs">${o.customer.phone}<br><span class="text-gray-400">${o.customer.address}</span></td>
+                    <td class="p-4 text-xs">${o.items.map(i => `${i.title} (x${i.qty})`).join(', ')}</td>
+                    <td class="p-4 font-bold text-gold-400">${o.total} TND</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
